@@ -6,6 +6,10 @@ import java.io.IOException;
 
 public class Parser {
 
+    public Parser(String s) {
+        parse(s);
+    }
+
     private Graph parse(String fileName) {
 
         Graph g = null;
@@ -27,19 +31,30 @@ public class Parser {
                         String[] commandLine = line.split(" ");
 //                        System.out.println((commandLine[2]);
                         g = new Graph(2*Integer.valueOf(commandLine[2]));
+//                        System.out.println("commandLine = " + commandLine[2] + "#############");
                     } else {
+                        line = line.trim().replaceAll(" +", " ");
+                        System.out.println(line);
                         String[] clausesInStr = line.split(" ");
+//                        System.out.println(clausesInStr);
 
                         int[] theEdge = new int[2];
+//                        System.out.println(clausesInStr);
 
                         for (int i = 0; i < clausesInStr.length - 1; i++) {
                             // add into the literalArrayList
                             // never add in the zero
+//                            System.out.println(clausesInStr[i]);
                             int temp0neLit = Integer.parseInt(clausesInStr[i]);
                             theEdge[i] = temp0neLit;
+                            System.out.println("theEdge[i] = " + theEdge[i]);
                         }
 
                         // add the two edges
+//                        System.out.println("######");
+//                        System.out.println("theEdge.toString() = " + theEdge.toString());
+
+                        //now the values are in integer format
                         g.addEdge((-1)*theEdge[0],theEdge[1]);
                         g.addEdge((-1)*theEdge[1],theEdge[0]);
 
@@ -61,5 +76,10 @@ public class Parser {
             }
         }
         return g;
+    }
+
+    public static void main(String[] args) {
+        Parser theParser = new Parser("/Users/anasiangangster/Downloads/50002/2d-demo/unsat2.cnf");
+//        System.out.println(theParser);
     }
 }
